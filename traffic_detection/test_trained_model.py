@@ -12,15 +12,22 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 # File paths
 # --------------------------------------------------
 
-model_path = PROJECT_ROOT / "models" / "best.pt"
-video_path = PROJECT_ROOT / "datasets" / "traffic_videos" / "traffic1.mp4"
+model_path = PROJECT_ROOT / "models" / "best_2000.pt"
+video_path = PROJECT_ROOT / "datasets" / "traffic_videos" / "traffic3.mp4"
 
-print("Model:", model_path)
-print("Video:", video_path)
+# --------------------------------------------------
+# Settings
+# --------------------------------------------------
 
-# Check files before loading
+CONFIDENCE = 0.60
+INFERENCE_SIZE = 1280
+
+# --------------------------------------------------
+# Check files
+# --------------------------------------------------
+
 if not model_path.exists():
-    print("ERROR: best.pt not found!")
+    print("ERROR: best_2000.pt not found!")
     exit()
 
 if not video_path.exists():
@@ -28,13 +35,13 @@ if not video_path.exists():
     exit()
 
 # --------------------------------------------------
-# Load fine-tuned UrbanVision model
+# Load model
 # --------------------------------------------------
 
 model = YOLO(str(model_path))
 
 # --------------------------------------------------
-# Open CCTV video
+# Open video
 # --------------------------------------------------
 
 cap = cv2.VideoCapture(str(video_path))
@@ -43,19 +50,19 @@ if not cap.isOpened():
     print("ERROR: Could not open video.")
     exit()
 
-# --------------------------------------------------
-# Video information
-# --------------------------------------------------
-
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = cap.get(cv2.CAP_PROP_FPS)
 
 print()
-print("Video opened successfully!")
+print("Model:", model_path)
+print("Video:", video_path)
 print("Resolution:", width, "x", height)
 print("FPS:", fps)
+print("Confidence:", CONFIDENCE)
+print("Inference size:", INFERENCE_SIZE)
 print()
+print("Press Q to stop.")
 
 # --------------------------------------------------
 # Process video
@@ -68,22 +75,19 @@ while True:
     if not ret:
         break
 
-    # Run fine-tuned model
     results = model.predict(
         source=frame,
-        conf=0.45,
+        conf=CONFIDENCE,
+        imgsz=INFERENCE_SIZE,
         verbose=False
     )
 
     result = results[0]
 
-    # Count vehicles in this frame
     vehicle_count = len(result.boxes)
 
-    # Draw bounding boxes
     annotated_frame = result.plot()
 
-    # Display vehicle count
     cv2.putText(
         annotated_frame,
         f"Vehicles: {vehicle_count}",
@@ -95,11 +99,10 @@ while True:
     )
 
     cv2.imshow(
-        "UrbanVision - Fine-Tuned Vehicle Detection",
+        "UrbanVision - 0.6 Confidence Test",
         annotated_frame
     )
 
-    # Press Q to stop
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 

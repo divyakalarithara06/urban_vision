@@ -10,10 +10,11 @@ import time
 # ============================================================
 
 VIDEO_PATH = "datasets/traffic_videos/traffic1.mp4"
-MODEL_PATH = "models/best.pt"
+MODEL_PATH = "models/best_2000.pt"
 LANE_CONFIG_PATH = "traffic_detection/lane_config.json"
 
 CONFIDENCE = 0.45
+INFERENCE_SIZE = 1280
 
 # Initial green signal
 INITIAL_GREEN_TIME = 5
@@ -69,6 +70,7 @@ def analyze_frame(frame):
     results = model.predict(
         frame,
         conf=CONFIDENCE,
+        imgsz=INFERENCE_SIZE,
         verbose=False
     )
 
@@ -216,6 +218,7 @@ def draw_display(
     results = model.predict(
         frame,
         conf=CONFIDENCE,
+        imgsz=INFERENCE_SIZE,
         verbose=False
     )
 
