@@ -45,3 +45,11 @@ dist/
 # =========================
 .env
 .env.*
+# Urban Vision local development cleanup
+**/node_modules/
+**/dist/
+outputs/
+*_backup_*/
+*.backup_*
+*.before_*
+*.bak

@@ -1,167 +1,259 @@
-import cv2
+
+import argparse
 import json
+import re
+from pathlib import Path
 
-VIDEO_PATH = "datasets/traffic_videos/traffic1.mp4"
+import cv2
+import numpy as np
 
-# -------------------------
-# Load first frame
-# -------------------------
 
-cap = cv2.VideoCapture(VIDEO_PATH)
+# ============================================================
+# PROJECT PATHS
+# ============================================================
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+CONFIG_DIR = PROJECT_ROOT / "traffic_detection" / "lane_configs"
+LEGACY_CONFIG_PATH = PROJECT_ROOT / "traffic_detection" / "lane_config.json"
+
+WINDOW_NAME = "Lane Setup"
+
+
+# ============================================================
+# SELECT VIDEO
+# ============================================================
+
+parser = argparse.ArgumentParser(description="Configure lanes for a video.")
+parser.add_argument(
+    "--video",
+    default="datasets/traffic_videos/traffic1.mp4",
+    help="Video path, relative to the project root or absolute.",
+)
+args = parser.parse_args()
+
+video_path = Path(args.video)
+
+if not video_path.is_absolute():
+    video_path = PROJECT_ROOT / video_path
+
+video_path = video_path.resolve()
+
+if not video_path.is_file():
+    raise SystemExit(f"Video file not found: {video_path}")
+
+CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Each video gets its own configuration.
+config_path = CONFIG_DIR / f"{video_path.stem}.json"
+
+
+# ============================================================
+# LOAD OR MIGRATE EXISTING CONFIGURATION
+# ============================================================
+
+if not config_path.exists():
+    # Preserve and migrate the existing traffic1 lane setup.
+    if (
+        video_path.stem == "traffic1"
+        and LEGACY_CONFIG_PATH.is_file()
+    ):
+        try:
+            with LEGACY_CONFIG_PATH.open("r", encoding="utf-8") as file:
+                legacy_lanes = json.load(file)
+
+            if isinstance(legacy_lanes, dict):
+                with config_path.open("w", encoding="utf-8") as file:
+                    json.dump(legacy_lanes, file, indent=4)
+
+                print(
+                    "Migrated the existing traffic1 lane configuration."
+                )
+        except (OSError, json.JSONDecodeError) as exc:
+            raise SystemExit(
+                f"Could not migrate the existing lane configuration: {exc}"
+            )
+
+if config_path.exists():
+    try:
+        with config_path.open("r", encoding="utf-8") as file:
+            lanes = json.load(file)
+
+        if not isinstance(lanes, dict):
+            raise ValueError("Expected a JSON object containing lane polygons.")
+
+        for lane_name, points in lanes.items():
+            if (
+                not isinstance(lane_name, str)
+                or not isinstance(points, list)
+                or len(points) < 3
+                or any(
+                    not isinstance(point, list)
+                    or len(point) != 2
+                    or any(
+                        not isinstance(value, (int, float))
+                        for value in point
+                    )
+                    for point in points
+                )
+            ):
+                raise ValueError(f"Invalid polygon for {lane_name!r}.")
+
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        raise SystemExit(
+            f"Cannot load lane configuration {config_path}: {exc}"
+        )
+else:
+    lanes = {}
+    print("No saved lane configuration exists for this video.")
+    print("Configure the lanes and save them to create one.")
+
+# Continue numbering after existing lanes.
+lane_numbers = [
+    int(match.group(1))
+    for name in lanes
+    if (match := re.fullmatch(r"Lane_(\d+)", name))
+]
+lane_number = max(lane_numbers, default=0) + 1
+
+
+# ============================================================
+# OPEN VIDEO AND READ FIRST FRAME
+# ============================================================
+
+cap = cv2.VideoCapture(str(video_path))
+
+if not cap.isOpened():
+    raise SystemExit(f"Could not open video: {video_path}")
 
 success, frame = cap.read()
-print("Frame Shape:", frame.shape)
 cap.release()
 
 if not success:
-    print("Could not read video.")
-    exit()
+    raise SystemExit(f"Could not read a frame from: {video_path}")
 
-# -------------------------
-# Lane Storage
-# -------------------------
+print("\nVideo:", video_path)
+print("Resolution:", frame.shape[1], "x", frame.shape[0])
+print("Configuration:", config_path)
+print("Existing lanes:", len(lanes))
+print("")
 
-lanes = {}
+
+# ============================================================
+# LANE DRAWING
+# ============================================================
+
 current_points = []
-lane_number = 1
 
-# -------------------------
-# Mouse Click Function
-# -------------------------
 
 def mouse_callback(event, x, y, flags, param):
-
-    global current_points
-
     if event == cv2.EVENT_LBUTTONDOWN:
-
         current_points.append([x, y])
-
         print(f"Point added: ({x}, {y})")
 
-# -------------------------
-# Window Setup
-# -------------------------
 
-cv2.namedWindow("Lane Setup")
-cv2.setMouseCallback(
-    "Lane Setup",
-    mouse_callback
-)
+cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
+cv2.resizeWindow(WINDOW_NAME, 1024, 576)
+cv2.setMouseCallback(WINDOW_NAME, mouse_callback)
 
-print("\nInstructions")
-print("----------------------")
-print("Left Click = Add Point")
-print("N = Save Current Lane")
-print("S = Save All Lanes")
-print("Q = Quit")
+print("===================================")
+print("LANE SETUP")
+print("===================================")
+print("Click points to draw a lane polygon.")
+print("Press N = save the current lane")
+print("Press S = save all lanes to this video's JSON")
+print("Press Q = quit without saving")
+print("===================================")
 
-# -------------------------
-# Main Loop
-# -------------------------
+
+# ============================================================
+# DISPLAY AND CONTROLS
+# ============================================================
 
 while True:
-
     display = frame.copy()
 
-    # Draw current points
+    # Draw previously saved lanes.
+    for saved_lane, points in lanes.items():
+        polygon = np.array(points, dtype=np.int32)
 
+        cv2.polylines(
+            display,
+            [polygon],
+            True,
+            (255, 0, 0),
+            2,
+        )
+
+        x, y = points[0]
+        cv2.putText(
+            display,
+            saved_lane,
+            (x, max(y - 10, 20)),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (255, 0, 0),
+            2,
+        )
+
+    # Draw points for the lane currently being created.
     for point in current_points:
-
         cv2.circle(
             display,
             tuple(point),
             5,
-            (0, 255, 0),
-            -1
+            (0, 0, 255),
+            -1,
         )
 
-    # Draw completed lanes
-
-    for lane_name, points in lanes.items():
-
-        pts = points
-
-        for i in range(len(pts)):
-
-            cv2.line(
-                display,
-                tuple(pts[i]),
-                tuple(pts[(i + 1) % len(pts)]),
-                (255, 0, 0),
-                2
-            )
-
-        cv2.putText(
+    if len(current_points) >= 2:
+        polygon = np.array(current_points, dtype=np.int32)
+        cv2.polylines(
             display,
-            lane_name,
-            tuple(pts[0]),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.7,
-            (255, 0, 0),
-            2
+            [polygon],
+            False,
+            (0, 255, 255),
+            2,
         )
 
-    cv2.imshow(
-        "Lane Setup",
-        display
-    )
-
+    cv2.imshow(WINDOW_NAME, display)
     key = cv2.waitKey(1) & 0xFF
 
-    # Save current lane
-
     if key == ord("n"):
-
         if len(current_points) >= 3:
-
             lane_name = f"Lane_{lane_number}"
-
             lanes[lane_name] = current_points.copy()
 
-            print(
-                f"Saved {lane_name}"
-            )
-
-            lane_number += 1
+            print(f"{lane_name} added: {current_points}")
 
             current_points.clear()
-
+            lane_number += 1
         else:
-
-            print(
-                "Need at least 3 points."
-            )
-
-    # Save all lanes
-    # Save all lanes
+            print("A lane needs at least 3 points.")
 
     elif key == ord("s"):
+        if not lanes:
+            print("No lanes to save. Draw at least one lane first.")
+            continue
 
-        print("\nLanes currently in memory:")
-        print(lanes)
+        try:
+            with config_path.open("w", encoding="utf-8") as file:
+                json.dump(lanes, file, indent=4)
 
-        with open(
-            "traffic_detection/lane_config.json",
-            "w"
-        ) as f:
-
-            json.dump(
-                lanes,
-                f,
-                indent=4
-            )
-
-        print(
-            "\nLane configuration saved."
-        )
+            print(f"Saved {len(lanes)} lanes to:")
+            print(config_path)
+        except OSError as exc:
+            print(f"Could not save lane configuration: {exc}")
+            continue
 
         break
-
-    # Quit
 
     elif key == ord("q"):
-
+        print("Exited without saving.")
         break
+
+
+# ============================================================
+# CLEANUP
+# ============================================================
 
 cv2.destroyAllWindows()

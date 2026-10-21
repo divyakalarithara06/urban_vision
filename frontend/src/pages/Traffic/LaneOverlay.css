@@ -1,0 +1,85 @@
+.lane-overlay-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.lane-overlay-container video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lane-overlay-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lane-overlay-message {
+  padding: 10px 14px;
+  color: #fbbf24;
+  background: #1e293b;
+  font-size: 13px;
+}
+
+/* Lane analysis panel */
+.lane-analysis-panel {
+  margin-bottom: 28px;
+  padding: 22px;
+  border: 1px solid var(--border-color, #263449);
+  border-radius: 16px;
+  background: var(--card-background, #111c2e);
+}
+
+.lane-camera-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  color: inherit;
+  font-size: 13px;
+}
+
+.lane-camera-select select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #f8fafc;
+  font: inherit;
+}
+
+.lane-analysis-panel .lane-overlay-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0f172a;
+}
+
+.lane-analysis-panel .lane-overlay-container video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lane-analysis-panel .lane-overlay-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lane-analysis-note {
+  margin: 12px 0 0;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.6;
+}
