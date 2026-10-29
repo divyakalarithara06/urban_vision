@@ -11,29 +11,29 @@ export default function LaneOverlay({ cameraId }) {
 
   useEffect(() => {
     let cancelled = false;
-    const video = document.querySelector(".lane-overlay-container video");
+    const video = document.querySelector(".lane-overlay-container img");
 
     setLanes(null);
     setDimensions(null);
     setError("");
 
     const updateDimensions = () => {
-      if (video?.videoWidth > 0 && video?.videoHeight > 0 && !cancelled) {
+      if (video?.naturalWidth > 0 && video?.naturalHeight > 0 && !cancelled) {
         setDimensions({
-          width: video.videoWidth,
-          height: video.videoHeight,
+          width: video.naturalWidth,
+          height: video.naturalHeight,
         });
       }
     };
 
-    video?.addEventListener("loadedmetadata", updateDimensions);
+    video?.addEventListener("load", updateDimensions);
     updateDimensions();
 
     if (!cameraId) {
       setError("Select a camera to view its lane boundaries.");
       return () => {
         cancelled = true;
-        video?.removeEventListener("loadedmetadata", updateDimensions);
+        video?.removeEventListener("load", updateDimensions);
       };
     }
 
@@ -57,7 +57,7 @@ export default function LaneOverlay({ cameraId }) {
 
     return () => {
       cancelled = true;
-      video?.removeEventListener("loadedmetadata", updateDimensions);
+      video?.removeEventListener("load", updateDimensions);
     };
   }, [cameraId]);
 
@@ -129,3 +129,4 @@ export default function LaneOverlay({ cameraId }) {
     </svg>
   );
 }
+

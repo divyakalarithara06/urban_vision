@@ -53,3 +53,14 @@ outputs/
 *.backup_*
 *.before_*
 *.bak
+
+# Local recovery backups - keep these out of Git
+backups/
+**/backups/
+*.backup*
+*.before-*
+*-backup-*.json
+
+# Additional timestamped backup filename patterns
+*-backup*
+*_backup_*

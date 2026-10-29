@@ -1,11 +1,12 @@
-.lane-overlay-container {
+﻿.lane-overlay-container {
   position: relative;
   width: 100%;
   overflow: hidden;
   background: #0f172a;
 }
 
-.lane-overlay-container video {
+.lane-overlay-container video,
+.lane-overlay-container img {
   display: block;
   width: 100%;
   height: auto;
@@ -63,7 +64,8 @@
   background: #0f172a;
 }
 
-.lane-analysis-panel .lane-overlay-container video {
+.lane-analysis-panel .lane-overlay-container video,
+.lane-overlay-container img {
   display: block;
   width: 100%;
   height: auto;

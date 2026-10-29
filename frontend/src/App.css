@@ -1,4 +1,4 @@
-﻿
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
 :root {
@@ -2770,3 +2770,761 @@ button:disabled {
   cursor: not-allowed;
 }
 
+
+
+/* Waste monitoring panel: keep status text readable on the light dashboard */
+.waste-monitoring-panel {
+  background: #ffffff !important;
+  color: #24314a !important;
+  border: 1px solid #dfe7f3 !important;
+  box-shadow: 0 4px 18px rgba(24, 42, 75, 0.05);
+}
+.waste-monitoring-panel .section-heading h2 {
+  color: #24314a !important;
+}
+.waste-monitoring-panel .section-heading p,
+.waste-monitoring-panel p {
+  color: #65748b !important;
+}
+.waste-monitoring-panel button {
+  background: #315fbd;
+  color: #ffffff;
+}
+.waste-monitoring-panel button:disabled {
+  background: #8a98b2;
+  color: #ffffff;
+}
+/* ===== UrbanVision UI refresh ===== */
+:root {
+  --uv-bg: #F1F4F0;
+  --uv-surface: #FBFCF9;
+  --uv-surface-soft: #E8EEE8;
+  --uv-text: #26352F;
+  --uv-muted: #78877F;
+  --uv-border: #DDE5DC;
+  --uv-accent: #376F9B;
+  --uv-accent-soft: #E5EEF3;
+  --uv-shadow: 0 8px 26px rgba(38, 53, 47, .045);
+}
+
+.app-shell--light .main-content {
+  background: var(--uv-bg);
+}
+
+.app-shell--dark {
+  --uv-bg: #151F1E;
+  --uv-surface: #202C2A;
+  --uv-surface-soft: #293734;
+  --uv-text: #E7EFEA;
+  --uv-muted: #9BAEA5;
+  --uv-border: #354541;
+  --uv-accent: #83B7DD;
+  --uv-accent-soft: #293F48;
+  --uv-shadow: 0 8px 26px rgba(0, 0, 0, .18);
+}
+
+.app-shell--dark .main-content {
+  background: var(--uv-bg);
+  color: var(--uv-text);
+}
+
+.app-shell--dark .topbar,
+.app-shell--dark .settings-card,
+.app-shell--dark .camera-card,
+.app-shell--dark .analytics-card,
+.app-shell--dark .stat-card,
+.app-shell--dark .event-row,
+.app-shell--dark .notice-card,
+.app-shell--dark .empty-state,
+.app-shell--dark .uv-settings-card {
+  background: var(--uv-surface);
+  color: var(--uv-text);
+  border-color: var(--uv-border);
+}
+
+.app-shell--dark .page-heading,
+.app-shell--dark .page-content {
+  color: var(--uv-text);
+}
+
+.app-shell--dark p,
+.app-shell--dark small,
+.app-shell--dark .eyebrow {
+  color: var(--uv-muted);
+}
+
+/* Settings layout */
+.uv-settings-page {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.uv-settings-heading {
+  margin-bottom: 26px;
+}
+
+.uv-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.uv-settings-card {
+  min-width: 0;
+  padding: 26px;
+  background: var(--uv-surface);
+  color: var(--uv-text);
+  border: 1px solid var(--uv-border);
+  border-radius: 18px;
+  box-shadow: var(--uv-shadow);
+}
+
+.uv-card-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 23px;
+}
+
+.uv-settings-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: var(--uv-accent-soft);
+  color: var(--uv-accent);
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.uv-card-heading h2 {
+  margin: 1px 0 5px;
+  color: var(--uv-text);
+  font-size: 19px;
+}
+
+.uv-card-heading p,
+.uv-settings-footnote {
+  color: var(--uv-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.uv-theme-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.uv-theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  text-align: left;
+  color: var(--uv-text);
+  background: var(--uv-surface);
+  border: 1px solid var(--uv-border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+
+.uv-theme-option:hover {
+  transform: translateY(-1px);
+  border-color: var(--uv-accent);
+}
+
+.uv-theme-option.is-selected {
+  border-color: var(--uv-accent);
+  background: var(--uv-accent-soft);
+}
+
+.uv-theme-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 0 0 43px;
+  width: 43px;
+  height: 43px;
+  padding: 7px;
+  border: 1px solid var(--uv-border);
+  border-radius: 8px;
+}
+
+.uv-theme-preview i {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: #dfe6f1;
+}
+
+.uv-theme-preview--light {
+  background: #f4f7fc;
+}
+
+.uv-theme-preview--light i:first-child {
+  background: #386bd8;
+}
+
+.uv-theme-preview--dark {
+  background: #101b2d;
+}
+
+.uv-theme-preview--dark i {
+  background: #243650;
+}
+
+.uv-theme-preview--dark i:first-child {
+  background: #6d96f5;
+}
+
+.uv-preference-row,
+.uv-connection-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid var(--uv-border);
+}
+
+.uv-preference-copy,
+.uv-connection-copy {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.uv-preference-copy strong,
+.uv-connection-copy strong {
+  color: var(--uv-text);
+  font-size: 13px;
+}
+
+.uv-preference-copy small,
+.uv-connection-copy small {
+  color: var(--uv-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.uv-settings-footnote {
+  margin-top: 18px;
+}
+
+@media (max-width: 1050px) {
+  .uv-settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .uv-settings-card {
+    padding: 19px;
+  }
+
+  .uv-theme-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* ===== End UrbanVision UI refresh ===== */
+
+
+/* ===== UrbanVision Settings Page Refresh ===== */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.settings-card {
+  position: relative;
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid var(--border-color, #e3eaf4);
+  border-radius: 18px;
+  background: var(--card-bg, #fff);
+  box-shadow: 0 8px 26px rgba(25, 48, 85, 0.045);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.settings-card:hover {
+  border-color: #c6d6f4;
+  box-shadow: 0 12px 32px rgba(25, 48, 85, 0.08);
+  transform: translateY(-2px);
+}
+
+.settings-card__eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #5075bd;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+
+.settings-card h3 {
+  margin: 0 0 12px;
+  font-size: 19px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.settings-card p {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.settings-card__button {
+  margin-top: 16px;
+}
+
+.module-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 0;
+  border-top: 1px solid var(--border-color, #edf0f6);
+  font-size: 13px;
+}
+
+.module-row:first-of-type {
+  margin-top: 10px;
+}
+
+.module-state {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border: 1px solid #e3e8f0;
+  border-radius: 999px;
+  background: #f5f7fa;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.module-state--ready {
+  border-color: #bdebd5;
+  background: #e9faf2;
+  color: #168253;
+}
+
+.settings-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--surface-soft, #f5f8fd);
+  font-size: 12px !important;
+}
+
+@media (max-width: 900px) {
+  .settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-card {
+    padding: 19px;
+    border-radius: 14px;
+  }
+
+  .module-row {
+    align-items: flex-start;
+  }
+}
+
+/* ===== End Settings Page Refresh ===== */
+
+
+
+/* UrbanVision Settings + theme */
+.uv-settings-heading { margin-bottom: 24px; }
+.uv-settings-layout { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:start; }
+.uv-settings-panel { min-width:0; padding:24px; border:1px solid var(--border-color,#e4eaf2); border-radius:18px; background:var(--card-bg,#fff); box-shadow:0 8px 26px rgba(25,48,85,.05); }
+.uv-settings-panel-heading { display:flex; gap:13px; align-items:center; margin-bottom:22px; }
+.uv-settings-symbol { display:grid; place-items:center; width:42px; height:42px; flex-shrink:0; border-radius:13px; background:#eaf1ff; color:#3768d4; font-size:23px; font-weight:800; }
+.uv-settings-panel-heading h2 { margin:0 0 5px; font-size:18px; }
+.uv-settings-panel-heading p,.uv-settings-hint { margin:0; color:#7b8aa2; font-size:12px; line-height:1.6; }
+.uv-theme-choices { display:grid; gap:12px; }
+.uv-theme-choice { display:flex; align-items:center; gap:13px; width:100%; padding:14px; text-align:left; color:inherit; background:transparent; border:1px solid var(--border-color,#e2e8f0); border-radius:13px; cursor:pointer; }
+.uv-theme-choice.is-active { border-color:#4779df; background:#f0f5ff; }
+.uv-theme-choice strong,.uv-theme-choice small { display:block; }
+.uv-theme-choice strong { font-size:13px; }
+.uv-theme-choice small { margin-top:4px; color:#7b8aa2; font-size:11px; }
+.uv-theme-preview { display:flex; flex-direction:column; justify-content:center; gap:4px; width:42px; height:42px; flex-shrink:0; padding:7px; border-radius:8px; }
+.uv-theme-preview i { height:5px; border-radius:4px; background:#d4deed; }
+.uv-preview-light { background:#f1f5fc; border:1px solid #dfe6f1; }
+.uv-preview-light i:first-child { background:#3768d4; }
+.uv-preview-dark { background:#111d30; border:1px solid #293b55; }
+.uv-preview-dark i { background:#344762; }
+.uv-preview-dark i:first-child { background:#7fa5ff; }
+.uv-theme-check { margin-left:auto; color:#3768d4; font-weight:800; }
+.uv-settings-hint { margin-top:16px; }
+.uv-module-status { display:flex; align-items:center; gap:11px; padding:14px 0; border-top:1px solid var(--border-color,#edf0f5); }
+.uv-module-icon { display:grid; place-items:center; width:34px; height:34px; flex-shrink:0; border-radius:10px; background:#eef3fc; color:#426bb5; font-size:12px; font-weight:800; }
+.uv-module-name { display:grid; gap:4px; flex:1; min-width:0; }
+.uv-module-name strong { font-size:12px; }
+.uv-module-name small { color:#7b8aa2; font-size:11px; }
+.uv-module-badge { flex-shrink:0; padding:5px 9px; border-radius:999px; background:#e6f8ef; color:#14794b; font-size:10px; font-weight:800; }
+.uv-theme-dark .main-content { background:#0d1627 !important; color:#edf3ff !important; }
+.uv-theme-dark .sidebar { background:#111d30 !important; color:#edf3ff !important; border-color:#293951 !important; }
+.uv-theme-dark .main-content .page-heading,
+.uv-theme-dark .main-content h1,.uv-theme-dark .main-content h2,
+.uv-theme-dark .main-content h3,.uv-theme-dark .main-content strong { color:#edf3ff; }
+.uv-theme-dark .main-content p,.uv-theme-dark .main-content small { color:#a7b6cc; }
+.uv-theme-dark .uv-settings-panel,
+.uv-theme-dark .settings-card,
+.uv-theme-dark .stat-card,
+.uv-theme-dark .camera-card,
+.uv-theme-dark .analytics-card,
+.uv-theme-dark .event-row,
+.uv-theme-dark .notice-card { background:#152238 !important; color:#edf3ff !important; border-color:#2a3b55 !important; }
+.uv-theme-dark .uv-theme-choice { color:#edf3ff; border-color:#30435f; }
+.uv-theme-dark .uv-theme-choice.is-active { background:#1c3152; border-color:#7198f2; }
+.uv-theme-dark .uv-module-status { border-color:#2a3b55; }
+.uv-theme-dark .uv-module-icon { background:#203552; color:#b9ceff; }
+.uv-theme-dark .uv-settings-symbol { background:#20385e; color:#a9c3ff; }
+.uv-theme-dark .uv-module-badge { background:#173e35; color:#8be0b7; }
+.uv-theme-dark .uv-theme-choice small,.uv-theme-dark .uv-settings-hint,
+.uv-theme-dark .uv-settings-panel-heading p,.uv-theme-dark .uv-module-name small { color:#a7b6cc; }
+
+/* Hide workspace connection/system status widgets only; connection logic is unchanged. */
+.uv-theme-dark .system-card,
+.uv-theme-dark .system-status-card,
+.uv-theme-dark .backend-status-card { color:#edf3ff; }
+
+@media(max-width:900px) { .uv-settings-layout { grid-template-columns:1fr; } }
+
+/* UrbanVision Settings theme switch */
+.uv-theme-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.uv-theme-toggle {
+  width: 48px;
+  height: 27px;
+  padding: 3px;
+  border: 1px solid var(--border-color, #cbd5e1);
+  border-radius: 999px;
+  background: #d1d5db;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: background 180ms ease;
+}
+
+.uv-theme-toggle__dot {
+  display: block;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 180ms ease;
+}
+
+.uv-theme-toggle.is-dark {
+  background: #6366f1;
+}
+
+.uv-theme-toggle.is-dark .uv-theme-toggle__dot {
+  transform: translateX(20px);
+}
+
+.uv-theme-toggle:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 3px;
+}
+
+.uv-implementation-grid {
+  grid-template-columns: minmax(280px, 620px);
+}
+
+.app-shell--dark .page-heading,
+.app-shell--dark .page-heading h1,
+.app-shell--dark .page-heading p,
+.app-shell--dark .uv-theme-control {
+  color: #e5e7eb;
+}
+
+@media (max-width: 600px) {
+  .uv-theme-control {
+    margin-left: 0;
+  }
+}
+/* Sage & Steel: consistent dark workspace surfaces */
+.app-shell--dark .main-content {
+  background: var(--uv-bg) !important;
+  color: var(--uv-text);
+}
+
+.app-shell--dark .main-content .metric-card,
+.app-shell--dark .main-content .overview-action-card,
+.app-shell--dark .main-content .camera-card,
+.app-shell--dark .main-content .worker-status-card,
+.app-shell--dark .main-content .stat-card,
+.app-shell--dark .main-content .analytics-card,
+.app-shell--dark .main-content .settings-card,
+.app-shell--dark .main-content .notice-card,
+.app-shell--dark .main-content .event-row,
+.app-shell--dark .main-content .empty-state,
+.app-shell--dark .main-content .uv-settings-card {
+  background: var(--uv-surface) !important;
+  color: var(--uv-text) !important;
+  border-color: var(--uv-border) !important;
+  box-shadow: none;
+}
+
+.app-shell--dark .main-content h1,
+.app-shell--dark .main-content h2,
+.app-shell--dark .main-content h3,
+.app-shell--dark .main-content h4,
+.app-shell--dark .main-content strong,
+.app-shell--dark .main-content .camera-card__title-row h3,
+.app-shell--dark .main-content .overview-action-card h3,
+.app-shell--dark .main-content .worker-status-card strong {
+  color: var(--uv-text);
+}
+
+.app-shell--dark .main-content p,
+.app-shell--dark .main-content small,
+.app-shell--dark .main-content .eyebrow,
+.app-shell--dark .main-content .camera-card__overline,
+.app-shell--dark .main-content .camera-card__worker-status,
+.app-shell--dark .main-content .camera-card__details span:first-child,
+.app-shell--dark .main-content .overview-action-card p,
+.app-shell--dark .main-content .worker-status-card__label {
+  color: var(--uv-muted);
+}
+
+.app-shell--dark .main-content .camera-card__details span:last-child {
+  color: var(--uv-text);
+}
+
+.app-shell--dark .main-content input,
+.app-shell--dark .main-content select,
+.app-shell--dark .main-content textarea {
+  background: var(--uv-surface-soft);
+  color: var(--uv-text);
+  border-color: var(--uv-border);
+}
+
+.app-shell--dark .main-content input::placeholder,
+.app-shell--dark .main-content textarea::placeholder {
+  color: var(--uv-muted);
+}
+
+
+/* Sage & Steel: remaining bright panels in dark mode */
+.app-shell--dark .main-content .add-camera-panel,
+.app-shell--dark .main-content .lane-monitoring-panel,
+.app-shell--dark .main-content .lane-monitoring-card,
+.app-shell--dark .main-content .waste-monitoring-panel {
+  background: var(--uv-surface) !important;
+  color: var(--uv-text) !important;
+  border-color: var(--uv-border) !important;
+  box-shadow: none !important;
+}
+
+.app-shell--dark .main-content .add-camera-panel__heading h2,
+.app-shell--dark .main-content .lane-monitoring-card h3,
+.app-shell--dark .main-content .lane-monitoring-card strong,
+.app-shell--dark .main-content .waste-monitoring-panel .section-heading h2 {
+  color: var(--uv-text) !important;
+}
+
+.app-shell--dark .main-content .add-camera-panel__heading p,
+.app-shell--dark .main-content .add-camera-form__hint,
+.app-shell--dark .main-content .lane-monitoring-card__eyebrow,
+.app-shell--dark .main-content .lane-monitoring-note,
+.app-shell--dark .main-content .lane-monitoring-empty p,
+.app-shell--dark .main-content .waste-monitoring-panel .section-heading p,
+.app-shell--dark .main-content .waste-monitoring-panel p {
+  color: var(--uv-muted) !important;
+}
+
+.app-shell--dark .main-content .add-camera-form input,
+.app-shell--dark .main-content .add-camera-form select,
+.app-shell--dark .main-content .add-camera-form textarea {
+  background: var(--uv-surface-soft) !important;
+  color: var(--uv-text) !important;
+  border-color: var(--uv-border) !important;
+}
+
+.app-shell--dark .main-content .lane-monitoring-bar {
+  background: var(--uv-surface-soft) !important;
+}
+
+.app-shell--dark .main-content .waste-monitoring-panel button {
+  background: var(--uv-accent);
+  color: #151F1E;
+}
+
+
+
+/* Sage & Steel: theme-matched workspace sidebar */
+.app-shell--light .sidebar {
+  background: #E8EEE8 !important;
+  color: #26352F !important;
+  border-right: 1px solid #DDE5DC;
+}
+
+.app-shell--dark .sidebar {
+  background: #202C2A !important;
+  color: #E7EFEA !important;
+  border-right: 1px solid #354541;
+}
+
+.app-shell--light .sidebar .brand__mark {
+  background: #376F9B;
+  border-color: #376F9B;
+  color: #FFFFFF;
+  box-shadow: none;
+}
+
+.app-shell--dark .sidebar .brand__mark {
+  background: #293734;
+  border-color: #354541;
+  color: #83B7DD;
+  box-shadow: none;
+}
+
+.app-shell--light .sidebar .brand__text strong,
+.app-shell--light .sidebar .brand__text span {
+  color: #26352F;
+}
+
+.app-shell--dark .sidebar .brand__text strong,
+.app-shell--dark .sidebar .brand__text span {
+  color: #E7EFEA;
+}
+
+.app-shell--light .sidebar .sidebar__section-label {
+  color: #78877F;
+}
+
+.app-shell--dark .sidebar .sidebar__section-label {
+  color: #9BAEA5;
+}
+
+.app-shell--light .sidebar .nav-item {
+  color: #596B61;
+}
+
+.app-shell--dark .sidebar .nav-item {
+  color: #B3C2BA;
+}
+
+.app-shell--light .sidebar .nav-item:hover {
+  color: #26352F;
+  background: #DDE5DC;
+}
+
+.app-shell--dark .sidebar .nav-item:hover {
+  color: #E7EFEA;
+  background: #293734;
+}
+
+.app-shell--light .sidebar .nav-item--active {
+  color: #244C68;
+  background: #D6E3E8;
+  border-color: #C4D5DD;
+  box-shadow: inset 3px 0 0 #376F9B;
+}
+
+.app-shell--dark .sidebar .nav-item--active {
+  color: #E7EFEA;
+  background: #293F48;
+  border-color: #354F57;
+  box-shadow: inset 3px 0 0 #83B7DD;
+}
+
+.app-shell--light .sidebar .sidebar__footer {
+  color: #78877F;
+  border-top-color: #DDE5DC;
+}
+
+.app-shell--dark .sidebar .sidebar__footer {
+  color: #9BAEA5;
+  border-top-color: #354541;
+}
+
+/* Sage & Steel: Live Cameras summary strip */
+.app-shell--light .main-content .summary-strip {
+  background: #FBFCF9 !important;
+  color: #26352F;
+  border-color: #DDE5DC;
+  box-shadow: none;
+}
+
+.app-shell--dark .main-content .summary-strip {
+  background: #202C2A !important;
+  color: #E7EFEA;
+  border-color: #354541;
+  box-shadow: none;
+}
+
+.app-shell--light .main-content .summary-strip__label {
+  color: #78877F;
+}
+
+.app-shell--light .main-content .summary-strip__item strong {
+  color: #26352F;
+}
+
+.app-shell--dark .main-content .summary-strip__label {
+  color: #9BAEA5;
+}
+
+.app-shell--dark .main-content .summary-strip__item strong {
+  color: #E7EFEA;
+}
+
+.app-shell--light .main-content .summary-strip__divider {
+  background: #DDE5DC;
+}
+
+.app-shell--dark .main-content .summary-strip__divider {
+  background: #354541;
+}
+
+.app-shell--light .main-content .summary-strip__icon,
+.app-shell--light .main-content .summary-strip__icon--blue,
+.app-shell--light .main-content .summary-strip__icon--green {
+  color: #376F9B;
+  background: #E5EEF3;
+}
+
+.app-shell--dark .main-content .summary-strip__icon,
+.app-shell--dark .main-content .summary-strip__icon--blue,
+.app-shell--dark .main-content .summary-strip__icon--green {
+  color: #83B7DD;
+  background: #293F48;
+}
+
+/* Annotated traffic MJPEG preview */
+.monitor-layout .video-frame img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  background: #0b1220;
+}

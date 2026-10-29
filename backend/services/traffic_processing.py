@@ -1,4 +1,4 @@
-
+﻿
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
@@ -269,6 +269,7 @@ class TrafficProcessor:
                 "inference_size": INFERENCE_SIZE,
                 "frame_width": width,
                 "frame_height": height,
+                "detections": detections,
                 "frame_timestamp_utc": datetime.now(
                     timezone.utc
                 ).isoformat(),

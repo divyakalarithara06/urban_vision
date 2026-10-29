@@ -157,10 +157,6 @@ export default function LaneEditor({ cameraId, cameraName, onClose, onSaved }) {
 
       {loading ? (
         <div className="lane-editor__loading">Loading saved configuration…</div>
-      ) : !dimensions ? (
-        <div className="lane-editor__notice lane-editor__notice--error">
-          No video dimensions are configured for this camera.
-        </div>
       ) : (
         <>
           <div className="lane-editor__workspace">
@@ -175,6 +171,7 @@ export default function LaneEditor({ cameraId, cameraName, onClose, onSaved }) {
                   playsInline
                   onLoadedMetadata={handleVideoMetadata}
                 />
+                {dimensions && (
                 <svg
                   className="lane-editor__svg"
                   viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
@@ -221,6 +218,7 @@ export default function LaneEditor({ cameraId, cameraName, onClose, onSaved }) {
                     </g>
                   )}
                 </svg>
+                )}
               </div>
               <p className="lane-editor__hint">
                 Pause the video if needed, then click each lane corner clockwise. Existing lanes remain visible while you edit.
@@ -286,5 +284,6 @@ export default function LaneEditor({ cameraId, cameraName, onClose, onSaved }) {
     </section>
   );
 }
+
 
 
